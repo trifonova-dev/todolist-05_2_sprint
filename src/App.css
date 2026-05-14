@@ -6,19 +6,21 @@
 .app > div {
   margin-right: 50px;
 }
-
-.error {
-  border: red 1px solid;
+.task {
+  font-weight: bold;
 }
-
-.error-message {
-  color: red;
-}
-
-.active-filter {
-  background-color: lightgreen;
-}
-
-.is-done {
+.task-done {
+  text-decoration: line-through;
+  font-style: italic;
   opacity: 0.5;
+}
+.filter-btn-active {
+  color: white;
+  background-color: cornflowerblue;
+  border: 2px solid cornflowerblue;
+  border-radius: 5px;
+}
+.error {
+  border: 2px solid red;
+  outline: none;
 }

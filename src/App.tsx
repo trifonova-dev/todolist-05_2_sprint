@@ -20,30 +20,39 @@ export type TodolistTasksType = {
 
 const todolistId_1 = v1()
 const todolistId_2 = v1()
+const todolistId_3 = v1()
+
 
 export function App() {
 
     const [todolists, setTodolists] = useState<TodolistType[]>([
         {id: todolistId_1, title: "What to learn", filter: "all"},
-        {id: todolistId_2, title: "What to buy", filter: "active"}
+        {id: todolistId_2, title: "What to buy", filter: "active"},
+        {id: todolistId_3, title: "What to want", filter: "completed"},
     ])
 
     const [tasks, setTasks] = useState<TodolistTasksType>({
         [todolistId_1]: [
+            {id: v1(), title: "CSS", isDone: true},
             {id: v1(), title: "HTML", isDone: true},
-            {id: v1(), title: "CSS", isDone: false},
             {id: v1(), title: "REACT", isDone: true},
             {id: v1(), title: "JS", isDone: true},
         ],
         [todolistId_2]: [
-            {id: v1(), title: "MEAT", isDone: false},
+            {id: v1(), title: "MEAT", isDone: true},
             {id: v1(), title: "MILK", isDone: true},
             {id: v1(), title: "WATER", isDone: true},
+        ],
+        [todolistId_3]: [
+            {id: v1(), title: "BIG SALARY", isDone: true},
+            {id: v1(), title: "COMFORT WORK", isDone: true},
+            {id: v1(), title: "COMFORT COLLEGES", isDone: true},
         ]
     })
 
 
     // BLL
+
     const deleteTask = (taskId: TaskType["id"], todolistId: TodolistType["id"]) => {
         // const todolistTasks = tasks[todolistId]
         // const filteredTasks = todolistTasks.filter(t => t.id !== taskId)
@@ -57,12 +66,14 @@ export function App() {
         const newTask = {
             id: v1(),
             title: title,
-            isDone: false
+            isDone: false,
         }
-        // const todolistTask = tasks[todolistId]
+        // const todolistTasks = tasks[todolistId]
+        // const addedTask = [...todolistTasks, newTask]
         // const copyState = {...tasks}
-        // copyState[todolistId] = [...todolistTask, newTask]
+        // copyState[todolistId] = addedTask
         // setTasks(copyState)
+        //
         setTasks({...tasks, [todolistId]: [...tasks[todolistId], newTask]})
     }
 

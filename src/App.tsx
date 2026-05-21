@@ -5,6 +5,7 @@ import './App.css'
 import {getFilterTasks} from './utilites/getFilteredTasks'
 import {v1} from 'uuid'
 import {TaskType, Todolist} from './Todolist'
+import {CreateItemForm} from "./CreateItemForm.tsx";
 
 export type FilterValuesType = "all" | "active" | "completed"
 
@@ -79,6 +80,10 @@ export function App() {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, isDone: isDone} : t)})
     }
 
+    const changeTaskTitle = (title: TaskType["title"], taskId: TaskType["id"], todolistId: TodolistType["id"]) => {
+        setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title} : t)})
+    }
+
     // UI
 
     const changeTodolistFilter = (filter: FilterValuesType, todolistId: TodolistType["id"]) => {
@@ -88,6 +93,22 @@ export function App() {
     const deleteTodolist = (todolistId: TodolistType["id"]) => {
         setTodolists(todolists.filter(tl => tl.id !== todolistId))
     }
+
+    const createTodolist = (title: TodolistType["title"]) => {
+        const newTodoId = v1()
+        const newTodo: TodolistType = {
+            id: newTodoId,
+            title: title,
+            filter: "all"
+        }
+        setTodolists([...todolists, newTodo])
+        setTasks({...tasks, [newTodoId]: []})
+    }
+
+    const changeTodolistTitle = (title: TodolistType["title"], todolistId: TodolistType["id"]) => {
+        setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title: title} : tl))
+    }
+
 
     const componenetTodolist = todolists.map(tl => {
         const filteredTasks = getFilterTasks(tasks[tl.id], tl.filter)
@@ -103,6 +124,9 @@ export function App() {
                 changeTaskStatus={changeTaskStatus}
                 createTask={createTask}
                 deleteTodolist={deleteTodolist}
+                changeTodolistTitle={changeTodolistTitle}
+                changeTaskTitle={changeTaskTitle}
+
             />
         )
     })
@@ -110,6 +134,9 @@ export function App() {
 
     return (
         <div className="app">
+            <CreateItemForm
+                createItem={createTodolist}
+                maxTitleLength={15}/>
             {componenetTodolist}
         </div>
     )

@@ -1,14 +1,16 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
-export type CreateItemFormType = {
+export type CreateItemType = {
     createItem: (itemTitle: string) => void
     maxTitleLength: number
 }
 
-export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType) => {
+export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => {
     const [itemInput, setItemInput] = useState("")
     const [error, setError] = useState(false)
+
+    const isItemTitleValid = Boolean(itemInput.length) && itemInput.length <= maxTitleLength
 
     const setLocalTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(false)
@@ -24,16 +26,11 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType)
         }
         setItemInput("")
     }
-
-
-    const isItemTitleValid = Boolean(itemInput.length) && itemInput.length <= maxTitleLength
-
     const onKeyDownCreateItemHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && isItemTitleValid) {
             createItemHandler()
         }
     }
-
     return (
         <div>
                 <span>
@@ -55,7 +52,5 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType)
             {isItemTitleValid && <div>Max title length is {maxTitleLength} charters</div>}
             {itemInput.length > maxTitleLength && <div style={{color: "red"}}>Title length is too long</div>}
         </div>
-
     );
-}
-
+};

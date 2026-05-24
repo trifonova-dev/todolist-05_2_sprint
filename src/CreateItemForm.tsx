@@ -1,23 +1,23 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
-export type CreateItemType = {
-    createItem: (itemTitle: string) => void
+export type CreateItemFormType = {
     maxTitleLength: number
+    createItem: (title: string) => void
 }
 
-export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => {
+export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType) => {
     const [itemInput, setItemInput] = useState("")
     const [error, setError] = useState(false)
-
-    const isItemTitleValid = Boolean(itemInput.length) && itemInput.length <= maxTitleLength
 
     const setLocalTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
         error && setError(false)
         setItemInput(e.currentTarget.value)
     }
 
-    const createItemHandler = () => {
+    const isTaskTitleValid = Boolean(itemInput.length) && itemInput.length <= maxTitleLength
+
+    const createTaskHandler = () => {
         const trimmedTitle = itemInput.trim()
         if (trimmedTitle) {
             createItem(trimmedTitle)
@@ -26,9 +26,10 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => 
         }
         setItemInput("")
     }
-    const onKeyDownCreateItemHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && isItemTitleValid) {
-            createItemHandler()
+
+    const onKeyDownCreateTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && isTaskTitleValid) {
+            createTaskHandler()
         }
     }
     return (
@@ -38,19 +39,20 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => 
                         value={itemInput}
                         className={error ? "error" : ""}
                         onChange={setLocalTitleHandler}
-                        onKeyDown={onKeyDownCreateItemHandler}
+                        onKeyDown={onKeyDownCreateTaskHandler}
                     />
                     {itemInput.length}
                 </span>
             <Button
                 title="+"
-                disabled={!isItemTitleValid}
-                onClick={createItemHandler}/>
+                disabled={!isTaskTitleValid}
+                onClick={createTaskHandler}/>
 
             {itemInput.length === 0 &&
                 <div style={{color: error ? "red" : "inherit"}}>Enter title end press button</div>}
-            {isItemTitleValid && <div>Max title length is {maxTitleLength} charters</div>}
+            {isTaskTitleValid && <div>Max title length is {maxTitleLength} charters</div>}
             {itemInput.length > maxTitleLength && <div style={{color: "red"}}>Title length is too long</div>}
         </div>
     );
 };
+

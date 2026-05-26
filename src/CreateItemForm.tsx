@@ -1,12 +1,13 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
-export type CreateItemFormType = {
+
+export type CreateItemType = {
     createItem: (itemTitle: string) => void
     maxTitleLength: number
 }
 
-export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType) => {
+export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => {
     const [itemInput, setItemInput] = useState("")
     const [error, setError] = useState(false)
 
@@ -26,7 +27,7 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType)
         setItemInput(e.currentTarget.value)
     }
     const onKeyDownCreateTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && isTaskTitleValid) {
+        if (e.key === "Enter" && e.ctrlKey && isTaskTitleValid) {
             createTaskHandler()
         }
     }

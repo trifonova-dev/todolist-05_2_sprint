@@ -45,7 +45,7 @@ export function App() {
     const deleteTask = (taskId: TaskType["id"], todolistId: TodolistType["id"]) => {
         // const todolistsTasks = tasks[todolistId]
         // const filteredTasks = todolistsTasks.filter(t => t.id !== taskId)
-        // const nextTasksState = {...tasks}
+        // const nextTasksState = { ...tasks }
         // nextTasksState[todolistId] = filteredTasks
         // setTasks(nextTasksState)
 
@@ -82,7 +82,6 @@ export function App() {
     const changeTaskTitle = (title: TaskType["title"], taskId: TaskType["id"], todolistId: TodolistType["id"]) => {
         setTasks({...tasks, [todolistId]: tasks[todolistId].map(t => t.id === taskId ? {...t, title: title} : t)})
     }
-
     const changeTodolistFilter = (filter: FilterValuesType, todolistId: TodolistType["id"]) => {
         setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, filter} : tl))
     }
@@ -92,12 +91,12 @@ export function App() {
 
     const createTodolist = (title: TodolistType["title"]) => {
         const newTodoId = v1()
-        const newTODO: TodolistType = {
+        const newTODOLIST: TodolistType = {
             id: newTodoId,
             title: title,
-            filter: "all"
+            filter: "all",
         }
-        setTodolists([...todolists, newTODO])
+        setTodolists([...todolists, newTODOLIST])
         setTasks({...tasks, [newTodoId]: []})
     }
 
@@ -122,8 +121,8 @@ export function App() {
                 changeTaskStatus={changeTaskStatus}
                 createTask={createTask}
                 deleteTodolist={deleteTodolist}
-                changeTaskTitle={changeTaskTitle}
                 changeTodolistTitle={changeTodolistTitle}
+                changeTaskTitle={changeTaskTitle}
             />
         )
     })
@@ -132,8 +131,7 @@ export function App() {
         <div className="app">
             <CreateItemForm
                 createItem={createTodolist}
-                maxTitleLength={10}
-            />
+                maxTitleLength={5}/>
             {todolistsComponents}
         </div>
     )

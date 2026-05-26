@@ -43,11 +43,11 @@ export function App() {
     })
 
     const deleteTask = (taskId: TaskType["id"], todolistId: TodolistType["id"]) => {
-        const todolistsTasks = tasks[todolistId]
-        const filteredTasks = todolistsTasks.filter(t => t.id !== taskId)
-        const nextTasksState = {...tasks}
-        nextTasksState[todolistId] = filteredTasks
-        setTasks(nextTasksState)
+        // const todolistsTasks = tasks[todolistId]
+        // const filteredTasks = todolistsTasks.filter(t => t.id !== taskId)
+        // const nextTasksState = {...tasks}
+        // nextTasksState[todolistId] = filteredTasks
+        // setTasks(nextTasksState)
 
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
     }
@@ -91,20 +91,19 @@ export function App() {
     }
 
     const createTodolist = (title: TodolistType["title"]) => {
-        const newTodoID = v1()
+        const newTodoId = v1()
         const newTODO: TodolistType = {
-            id: newTodoID,
+            id: newTodoId,
             title: title,
-            filter: "all",
+            filter: "all"
         }
         setTodolists([...todolists, newTODO])
-        setTasks({...tasks, [newTodoID]: []})
+        setTasks({...tasks, [newTodoId]: []})
     }
 
     const changeTodolistTitle = (title: TodolistType["title"], todolistId: TodolistType["id"]) => {
         setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title: title} : tl))
     }
-
 
     // UI
 
@@ -123,8 +122,8 @@ export function App() {
                 changeTaskStatus={changeTaskStatus}
                 createTask={createTask}
                 deleteTodolist={deleteTodolist}
-                changeTodolistTitle={changeTodolistTitle}
                 changeTaskTitle={changeTaskTitle}
+                changeTodolistTitle={changeTodolistTitle}
             />
         )
     })
@@ -133,7 +132,8 @@ export function App() {
         <div className="app">
             <CreateItemForm
                 createItem={createTodolist}
-                maxTitleLength={12}/>
+                maxTitleLength={10}
+            />
             {todolistsComponents}
         </div>
     )

@@ -10,10 +10,6 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType)
     const [itemInput, setItemInput] = useState("")
     const [error, setError] = useState(false)
 
-    const setLocalTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        error && setError(false)
-        setItemInput(e.currentTarget.value)
-    }
     const createTaskHandler = () => {
         const trimmedTitle = itemInput.trim()
         if (trimmedTitle) {
@@ -25,12 +21,16 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType)
     }
 
     const isTaskTitleValid = Boolean(itemInput.length) && itemInput.length <= maxTitleLength
-
+    const setLocalTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        error && setError(false)
+        setItemInput(e.currentTarget.value)
+    }
     const onKeyDownCreateTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && isTaskTitleValid) {
             createTaskHandler()
         }
     }
+
     return (
         <div>
                 <span>

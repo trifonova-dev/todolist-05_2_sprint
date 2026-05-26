@@ -16,17 +16,16 @@ export const EditableSpan = ({title, changeTitle, className}: EditableSpanType) 
         setEditMode(false)
     }
 
-    const setLocalTitleHandler =
-        (e: ChangeEvent<HTMLInputElement>) => {
-            setItemTitle(e.currentTarget.value)
-        }
+    const onChangeItemTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setItemTitle(e.currentTarget.value)
+    }
 
     return (
         editMode
             ? <input
                 autoFocus
                 value={itemTitle}
-                onChange={setLocalTitleHandler}
+                onChange={onChangeItemTitleHandler}
                 onBlur={offEditMode}
             />
             : <span

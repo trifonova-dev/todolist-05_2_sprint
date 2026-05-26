@@ -1,13 +1,12 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
-export type CreateItemType = {
+export type CreateItemFormType = {
     createItem: (itemTitle: string) => void
     maxTitleLength: number
 }
 
-
-export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => {
+export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType) => {
     const [itemInput, setItemInput] = useState("")
     const [error, setError] = useState(false)
 
@@ -32,7 +31,6 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => 
             createTaskHandler()
         }
     }
-
     return (
         <div>
                 <span>
@@ -56,4 +54,3 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => 
         </div>
     );
 };
-

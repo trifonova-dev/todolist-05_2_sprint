@@ -1,12 +1,13 @@
 import {Button} from "./Button.tsx";
 import {ChangeEvent, KeyboardEvent, useState} from "react";
 
-export type CreateItemFormType = {
+export type CreateItemType = {
+    createItem: (itemTitle: string) => void
     maxTitleLength: number
-    createItem: (title: string) => void
 }
 
-export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType) => {
+
+export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemType) => {
     const [itemInput, setItemInput] = useState("")
     const [error, setError] = useState(false)
 
@@ -14,9 +15,6 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType)
         error && setError(false)
         setItemInput(e.currentTarget.value)
     }
-
-    const isTaskTitleValid = Boolean(itemInput.length) && itemInput.length <= maxTitleLength
-
     const createTaskHandler = () => {
         const trimmedTitle = itemInput.trim()
         if (trimmedTitle) {
@@ -27,11 +25,14 @@ export const CreateItemForm = ({createItem, maxTitleLength}: CreateItemFormType)
         setItemInput("")
     }
 
+    const isTaskTitleValid = Boolean(itemInput.length) && itemInput.length <= maxTitleLength
+
     const onKeyDownCreateTaskHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter" && isTaskTitleValid) {
             createTaskHandler()
         }
     }
+
     return (
         <div>
                 <span>

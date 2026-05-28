@@ -45,7 +45,7 @@ export function App() {
     const deleteTask = (taskId: TaskType["id"], todolistId: TodolistType["id"]) => {
         // const todolistsTasks = tasks[todolistId]
         // const filteredTasks = todolistsTasks.filter(t => t.id !== taskId)
-        // const nextTasksState = { ...tasks }
+        // const nextTasksState = {...tasks}
         // nextTasksState[todolistId] = filteredTasks
         // setTasks(nextTasksState)
 
@@ -91,14 +91,14 @@ export function App() {
     }
 
     const createTodolist = (title: TodolistType["title"]) => {
-        const newTODOId = v1()
-        const newTodoList: TodolistType = {
-            id: newTODOId,
+        const newTodoId = v1()
+        const newTodolist: TodolistType = {
+            id: newTodoId,
             title: title,
-            filter: "all"
+            filter: "all",
         }
-        setTodolists([newTodoList, ...todolists])
-        setTasks({...tasks, [newTODOId]: []})
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [newTodoId]: []})
     }
 
     const changeTodolistTitle = (title: TodolistType["title"], todolistId: TodolistType["id"]) => {
@@ -133,7 +133,7 @@ export function App() {
         <div className="app">
             <CreateItemForm
                 createItem={createTodolist}
-                maxTitleLength={11}/>
+                maxTitleLength={10}/>
             {todolistsComponents}
         </div>
     )

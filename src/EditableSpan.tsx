@@ -27,7 +27,6 @@ export const EditableSpan = ({title, callBack, className}: EditableSpanType) => 
                 value={itemTitle}
                 onChange={onChangeItemTitle}
                 onBlur={offEditMode}
-
             />
             : <span
                 onClick={onEditMode}

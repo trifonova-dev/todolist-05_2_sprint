@@ -43,11 +43,11 @@ export function App() {
     })
 
     const deleteTask = (taskId: TaskType["id"], todolistId: TodolistType["id"]) => {
-        // const todolistsTasks = tasks[todolistId]
-        // const filteredTasks = todolistsTasks.filter(t => t.id !== taskId)
-        // const nextTasksState = { ...tasks }
-        // nextTasksState[todolistId] = filteredTasks
-        // setTasks(nextTasksState)
+        const todolistsTasks = tasks[todolistId]
+        const filteredTasks = todolistsTasks.filter(t => t.id !== taskId)
+        const nextTasksState = {...tasks}
+        nextTasksState[todolistId] = filteredTasks
+        setTasks(nextTasksState)
 
         setTasks({...tasks, [todolistId]: tasks[todolistId].filter(t => t.id !== taskId)})
     }
@@ -90,20 +90,19 @@ export function App() {
     }
 
     const createTodolist = (title: TodolistType["title"]) => {
-        const newTodoId = v1()
-        const newTODOLIST: TodolistType = {
-            id: newTodoId,
+        const newTodoID = v1()
+        const newTodoList: TodolistType = {
+            id: newTodoID,
             title: title,
             filter: "all",
         }
-        setTodolists([...todolists, newTODOLIST])
-        setTasks({...tasks, [newTodoId]: []})
+        setTodolists([newTodoList, ...todolists])
+        setTasks({...tasks, [newTodoID]: []})
     }
 
     const changeTodolistTitle = (title: TodolistType["title"], todolistId: TodolistType["id"]) => {
         setTodolists(todolists.map(tl => tl.id === todolistId ? {...tl, title: title} : tl))
     }
-
     // UI
 
 
@@ -121,8 +120,8 @@ export function App() {
                 changeTaskStatus={changeTaskStatus}
                 createTask={createTask}
                 deleteTodolist={deleteTodolist}
-                changeTodolistTitle={changeTodolistTitle}
                 changeTaskTitle={changeTaskTitle}
+                changeTodolistTitle={changeTodolistTitle}
             />
         )
     })
@@ -131,7 +130,7 @@ export function App() {
         <div className="app">
             <CreateItemForm
                 createItem={createTodolist}
-                maxTitleLength={5}/>
+                maxTitleLength={10}/>
             {todolistsComponents}
         </div>
     )

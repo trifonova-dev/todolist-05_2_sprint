@@ -3,9 +3,10 @@ import {ChangeEvent, useState} from "react";
 export type EditableSpanType = {
     title: string
     callBack: (newTitle: string) => void
+    className?: string
 }
 
-export const EditableSpan = ({title, callBack}: EditableSpanType) => {
+export const EditableSpan = ({title, callBack, className}: EditableSpanType) => {
     const [itemTitle, setItemTitle] = useState(title)
     const [editMode, setEditMode] = useState(false)
 
@@ -15,7 +16,7 @@ export const EditableSpan = ({title, callBack}: EditableSpanType) => {
         setEditMode(false)
     }
 
-    const onChangeTitleItemHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeItemTitle = (e: ChangeEvent<HTMLInputElement>) => {
         setItemTitle(e.currentTarget.value)
     }
 
@@ -24,11 +25,13 @@ export const EditableSpan = ({title, callBack}: EditableSpanType) => {
             ? <input
                 autoFocus
                 value={itemTitle}
-                onChange={onChangeTitleItemHandler}
+                onChange={onChangeItemTitle}
                 onBlur={offEditMode}
+
             />
             : <span
                 onClick={onEditMode}
+                className={className}
             >{title}</span>
     );
 };
